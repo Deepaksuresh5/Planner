@@ -71,7 +71,7 @@ body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;backgrou
 .btn-dismiss{background:none;border:none;color:var(--text3);font-size:12px;cursor:pointer}
 
 /* Tabs */
-.tabs{display:flex;gap:6px;margin-bottom:16px;background:var(--bg2);padding:4px;border-radius:var(--radius-lg);overflow-x:auto}
+.tabs{display:flex;gap:5px;margin-bottom:16px;background:var(--bg2);padding:4px;border-radius:var(--radius-lg);overflow-x:auto}
 .tab{flex:1;min-width:0;padding:8px 4px;border:none;border-radius:10px;background:transparent;color:var(--text2);font-size:12px;cursor:pointer;font-weight:500;white-space:nowrap;display:flex;align-items:center;justify-content:center;gap:4px}
 .tab.active{background:var(--bg);color:var(--text);box-shadow:0 1px 4px rgba(0,0,0,0.1)}
 .view{display:none}.view.active{display:block}
@@ -82,15 +82,16 @@ body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;backgrou
 .date-title{font-size:16px;font-weight:600;text-align:center;flex:1}
 
 /* Add row */
-.add-row{display:flex;gap:7px;margin-bottom:14px}
+.add-row{display:flex;gap:7px;margin-bottom:8px;flex-wrap:wrap}
 .add-row input,.add-row select{font-size:14px;padding:9px 11px;border:0.5px solid var(--border2);border-radius:var(--radius);background:var(--bg2);color:var(--text);outline:none}
-.add-row input{flex:1}
-.add-row select{max-width:130px}
+.add-row input{flex:1;min-width:120px}
+.add-row select{flex:1;min-width:120px}
 .add-row input:focus,.add-row select:focus{border-color:var(--amber)}
 .add-row input::placeholder{color:var(--text3)}
 .flag-btn{padding:0 11px;border:0.5px solid var(--border2);border-radius:var(--radius);background:var(--bg2);cursor:pointer;color:var(--text3);font-size:16px;display:flex;align-items:center}
 .flag-btn.on{border-color:var(--amber);background:var(--amber-bg);color:var(--amber)}
 .add-btn{padding:0 14px;border:none;border-radius:var(--radius);background:var(--text);color:var(--bg);cursor:pointer;font-size:20px;min-height:40px}
+.add-row-2{display:flex;gap:7px;margin-bottom:14px}
 
 /* Tasks */
 .section-label{font-size:11px;color:var(--text3);text-transform:uppercase;letter-spacing:.07em;margin-bottom:8px;margin-top:4px}
@@ -98,10 +99,16 @@ body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;backgrou
 .task{display:flex;align-items:flex-start;gap:9px;padding:10px 12px;border:0.5px solid var(--border);border-radius:var(--radius-lg);background:var(--bg)}
 .task.done{opacity:.45}
 .task.important{border-left:3px solid var(--amber);padding-left:10px}
-.check{width:20px;height:20px;border-radius:6px;border:1.5px solid var(--border2);flex-shrink:0;cursor:pointer;margin-top:1px;display:flex;align-items:center;justify-content:center;font-size:12px}
+.check{width:20px;height:20px;border-radius:6px;border:1.5px solid var(--border2);flex-shrink:0;cursor:pointer;margin-top:2px;display:flex;align-items:center;justify-content:center;font-size:11px}
 .check.checked{background:var(--amber);border-color:var(--amber);color:#fff}
-.task-text{flex:1;font-size:14px;line-height:1.5;word-break:break-word;padding-top:1px}
+.task-body{flex:1;min-width:0}
+.task-text{font-size:14px;line-height:1.5;word-break:break-word}
 .task.done .task-text{text-decoration:line-through;color:var(--text3)}
+.task-quadrant-badge{display:inline-block;font-size:10px;padding:2px 7px;border-radius:10px;margin-top:4px;font-weight:500}
+.qbadge-q1{background:var(--red-bg);color:var(--red)}
+.qbadge-q2{background:var(--blue-bg);color:var(--blue)}
+.qbadge-q3{background:var(--amber-bg);color:var(--amber)}
+.qbadge-q4{background:var(--bg2);color:var(--text3)}
 .task-actions{display:flex;align-items:center;gap:5px;flex-shrink:0}
 .flag-ind{cursor:pointer;font-size:14px;opacity:.3}
 .flag-ind.on{opacity:1;color:var(--amber)}
@@ -122,51 +129,51 @@ body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;backgrou
 .dot{position:absolute;bottom:2px;width:4px;height:4px;border-radius:50%;background:var(--amber)}
 .cal-cell.has-imp .dot{background:var(--red)}
 .month-day-header{font-size:14px;font-weight:600;color:var(--text2);margin:12px 0 8px;padding-bottom:6px;border-bottom:0.5px solid var(--border)}
-.month-add{display:flex;gap:7px;margin-top:10px}
-.month-add input{flex:1;font-size:14px;padding:8px 11px;border:0.5px solid var(--border2);border-radius:var(--radius);background:var(--bg2);color:var(--text);outline:none}
+.month-add{display:flex;gap:7px;margin-top:10px;flex-wrap:wrap}
+.month-add input,.month-add select{font-size:13px;padding:8px 10px;border:0.5px solid var(--border2);border-radius:var(--radius);background:var(--bg2);color:var(--text);outline:none}
+.month-add input{flex:1;min-width:100px}
+.month-add select{flex:1;min-width:100px}
 .month-add input::placeholder{color:var(--text3)}
 
 /* Eisenhower Matrix */
-.matrix-intro{font-size:13px;color:var(--text2);margin-bottom:12px;line-height:1.5}
+.matrix-intro{font-size:13px;color:var(--text2);margin-bottom:12px;line-height:1.5;padding:10px 12px;background:var(--bg2);border-radius:var(--radius)}
+.matrix-axis-row{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-bottom:4px}
+.matrix-axis-label{text-align:center;font-size:11px;font-weight:600;padding:4px;border-radius:6px}
 .matrix-grid{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-bottom:16px}
-.matrix-cell{border-radius:var(--radius-lg);padding:12px;min-height:140px;border:0.5px solid var(--border)}
+.matrix-cell{border-radius:var(--radius-lg);padding:12px;min-height:120px;border:0.5px solid var(--border)}
 .matrix-cell.q1{background:var(--red-bg);border-color:rgba(226,75,74,0.2)}
 .matrix-cell.q2{background:var(--blue-bg);border-color:rgba(24,95,165,0.2)}
 .matrix-cell.q3{background:var(--amber-bg);border-color:rgba(186,117,23,0.2)}
 .matrix-cell.q4{background:var(--bg2);border-color:var(--border)}
-.matrix-cell-header{font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:.06em;margin-bottom:4px}
+.matrix-cell-header{font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:.06em;margin-bottom:2px}
 .q1 .matrix-cell-header{color:var(--red)}
 .q2 .matrix-cell-header{color:var(--blue)}
 .q3 .matrix-cell-header{color:var(--amber)}
 .q4 .matrix-cell-header{color:var(--text3)}
 .matrix-cell-sub{font-size:10px;color:var(--text3);margin-bottom:8px}
-.matrix-task{font-size:12px;padding:5px 8px;background:rgba(255,255,255,0.6);border-radius:7px;margin-bottom:5px;display:flex;align-items:center;gap:6px;cursor:pointer;border:0.5px solid rgba(0,0,0,0.06)}
+.matrix-task{font-size:12px;padding:5px 7px;background:rgba(255,255,255,0.55);border-radius:7px;margin-bottom:4px;display:flex;align-items:center;gap:5px;border:0.5px solid rgba(0,0,0,0.05)}
 @media(prefers-color-scheme:dark){.matrix-task{background:rgba(255,255,255,0.07)}}
-.matrix-task.done{opacity:.4;text-decoration:line-through}
-.matrix-task-check{width:14px;height:14px;border-radius:4px;border:1.5px solid currentColor;flex-shrink:0;display:flex;align-items:center;justify-content:center;font-size:9px}
+.matrix-task.done-task{opacity:.4}
+.matrix-task.done-task .matrix-task-text{text-decoration:line-through}
+.matrix-task-check{width:14px;height:14px;border-radius:4px;border:1.5px solid currentColor;flex-shrink:0;display:flex;align-items:center;justify-content:center;font-size:9px;cursor:pointer}
 .q1 .matrix-task-check{color:var(--red)}
 .q2 .matrix-task-check{color:var(--blue)}
 .q3 .matrix-task-check{color:var(--amber)}
 .q4 .matrix-task-check{color:var(--text3)}
-.matrix-task-del{margin-left:auto;opacity:.4;font-size:11px;flex-shrink:0}
-.matrix-add{display:flex;gap:6px;margin-top:6px}
-.matrix-add input{flex:1;font-size:12px;padding:6px 8px;border:0.5px solid var(--border2);border-radius:8px;background:rgba(255,255,255,0.5);color:var(--text);outline:none}
-@media(prefers-color-scheme:dark){.matrix-add input{background:rgba(255,255,255,0.07)}}
-.matrix-add input::placeholder{color:var(--text3)}
-.matrix-add button{padding:0 10px;border:none;border-radius:8px;background:var(--text);color:var(--bg);cursor:pointer;font-size:16px;min-height:32px}
-.matrix-axis{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-bottom:4px}
-.matrix-axis-label{text-align:center;font-size:11px;color:var(--text3);font-weight:500}
+.matrix-task-text{flex:1;font-size:12px;line-height:1.4}
+.matrix-task-imp{font-size:11px;color:var(--amber);opacity:.7}
+.matrix-task-del{opacity:.35;font-size:11px;flex-shrink:0;cursor:pointer}
+.matrix-source{font-size:9px;color:var(--text3);margin-top:1px}
 
 /* Meetings */
 .meeting-add-form{background:var(--bg2);border-radius:var(--radius-lg);padding:14px;margin-bottom:14px;border:0.5px solid var(--border)}
 .meeting-add-form h3{font-size:13px;font-weight:600;margin-bottom:10px}
-.form-row{display:flex;gap:7px;margin-bottom:8px;flex-wrap:wrap}
-.form-row input,.form-row select,.form-row textarea{font-size:13px;padding:8px 10px;border:0.5px solid var(--border2);border-radius:var(--radius);background:var(--bg);color:var(--text);outline:none;width:100%}
+.form-row{display:flex;gap:7px;margin-bottom:8px}
+.form-row input,.form-row select,.form-row textarea{font-size:13px;padding:8px 10px;border:0.5px solid var(--border2);border-radius:var(--radius);background:var(--bg);color:var(--text);outline:none;width:100%;font-family:inherit}
 .form-row input:focus,.form-row select:focus,.form-row textarea:focus{border-color:var(--amber)}
 .form-row input::placeholder,.form-row textarea::placeholder{color:var(--text3)}
-.form-row textarea{resize:none;height:60px;font-family:inherit}
+.form-row textarea{resize:none;height:56px}
 .form-row.two{display:grid;grid-template-columns:1fr 1fr;gap:7px}
-.form-row.three{display:grid;grid-template-columns:1fr 1fr 1fr;gap:7px}
 .btn-add-meeting{width:100%;padding:10px;border:none;border-radius:var(--radius);background:var(--text);color:var(--bg);font-size:14px;font-weight:600;cursor:pointer}
 .meeting-list{display:flex;flex-direction:column;gap:8px}
 .meeting-card{background:var(--bg);border:0.5px solid var(--border);border-radius:var(--radius-lg);padding:12px 14px;border-left:3px solid var(--blue)}
@@ -176,8 +183,8 @@ body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;backgrou
 .meeting-card.done .meeting-title{text-decoration:line-through;color:var(--text3)}
 .meeting-time{font-size:12px;color:var(--blue);font-weight:500;white-space:nowrap;background:var(--blue-bg);padding:3px 8px;border-radius:20px}
 .meeting-card.done .meeting-time{color:var(--text3);background:var(--bg2)}
-.meeting-meta{display:flex;gap:10px;margin-top:6px;flex-wrap:wrap}
-.meeting-meta span{font-size:12px;color:var(--text2);display:flex;align-items:center;gap:3px}
+.meeting-meta{display:flex;gap:8px;margin-top:6px;flex-wrap:wrap}
+.meeting-meta span{font-size:12px;color:var(--text2)}
 .meeting-notes{font-size:12px;color:var(--text2);margin-top:6px;line-height:1.5;border-top:0.5px solid var(--border);padding-top:6px}
 .meeting-actions{display:flex;gap:6px;margin-top:8px}
 .meeting-btn{font-size:11px;padding:4px 10px;border:0.5px solid var(--border);border-radius:20px;color:var(--text2);background:var(--bg2);cursor:pointer}
@@ -258,6 +265,15 @@ body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;backgrou
     <div class="add-row">
       <input id="day-input" placeholder="Add a task…" onkeydown="if(event.key==='Enter')addTask()" autocomplete="off"/>
       <button class="flag-btn" id="flag-btn" onclick="toggleFlag()" title="Mark important">🚩</button>
+    </div>
+    <div class="add-row-2">
+      <select id="day-quadrant" style="flex:1;font-size:13px;padding:8px 10px;border:0.5px solid var(--border2);border-radius:var(--radius);background:var(--bg2);color:var(--text);outline:none">
+        <option value="">— Matrix quadrant (optional) —</option>
+        <option value="q1">🔴 Do First (Urgent + Important)</option>
+        <option value="q2">🔵 Schedule (Not Urgent + Important)</option>
+        <option value="q3">🟡 Delegate (Urgent + Not Important)</option>
+        <option value="q4">⬜ Eliminate (Not Urgent + Not Important)</option>
+      </select>
       <button class="add-btn" onclick="addTask()">+</button>
     </div>
     <div class="section-label">Tasks</div>
@@ -277,46 +293,46 @@ body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;backgrou
 
   <!-- EISENHOWER MATRIX -->
   <div class="view" id="view-matrix">
-    <p class="matrix-intro">Organise tasks by <b>urgency</b> and <b>importance</b>. Tap ✓ to complete, × to delete.</p>
-    <div class="matrix-axis">
-      <div class="matrix-axis-label" style="color:var(--red)">⚡ Urgent</div>
-      <div class="matrix-axis-label" style="color:var(--text3)">🕐 Not Urgent</div>
+    <div class="matrix-intro">Tasks tagged with a quadrant in <b>Day</b> or <b>Month</b> view appear here automatically. You can also add tasks directly to any quadrant.</div>
+    <div class="matrix-axis-row">
+      <div class="matrix-axis-label" style="background:var(--red-bg);color:var(--red)">⚡ Urgent</div>
+      <div class="matrix-axis-label" style="background:var(--blue-bg);color:var(--blue)">🕐 Not Urgent</div>
     </div>
     <div class="matrix-grid">
       <div class="matrix-cell q1">
-        <div class="matrix-cell-header">Do First</div>
+        <div class="matrix-cell-header">🔴 Do First</div>
         <div class="matrix-cell-sub">Urgent + Important</div>
         <div id="q1-tasks"></div>
-        <div class="matrix-add">
-          <input id="q1-input" placeholder="Add task…" onkeydown="if(event.key==='Enter')addMatrixTask('q1')"/>
-          <button onclick="addMatrixTask('q1')">+</button>
+        <div class="matrix-add" style="display:flex;gap:5px;margin-top:6px">
+          <input id="q1-input" placeholder="Add task…" style="flex:1;font-size:12px;padding:6px 8px;border:0.5px solid var(--border2);border-radius:8px;background:rgba(255,255,255,0.5);color:var(--text);outline:none" onkeydown="if(event.key==='Enter')addDirectMatrixTask('q1')"/>
+          <button onclick="addDirectMatrixTask('q1')" style="padding:0 9px;border:none;border-radius:8px;background:var(--text);color:var(--bg);cursor:pointer;font-size:16px;min-height:30px">+</button>
         </div>
       </div>
       <div class="matrix-cell q2">
-        <div class="matrix-cell-header">Schedule</div>
+        <div class="matrix-cell-header">🔵 Schedule</div>
         <div class="matrix-cell-sub">Not Urgent + Important</div>
         <div id="q2-tasks"></div>
-        <div class="matrix-add">
-          <input id="q2-input" placeholder="Add task…" onkeydown="if(event.key==='Enter')addMatrixTask('q2')"/>
-          <button onclick="addMatrixTask('q2')">+</button>
+        <div class="matrix-add" style="display:flex;gap:5px;margin-top:6px">
+          <input id="q2-input" placeholder="Add task…" style="flex:1;font-size:12px;padding:6px 8px;border:0.5px solid var(--border2);border-radius:8px;background:rgba(255,255,255,0.5);color:var(--text);outline:none" onkeydown="if(event.key==='Enter')addDirectMatrixTask('q2')"/>
+          <button onclick="addDirectMatrixTask('q2')" style="padding:0 9px;border:none;border-radius:8px;background:var(--text);color:var(--bg);cursor:pointer;font-size:16px;min-height:30px">+</button>
         </div>
       </div>
       <div class="matrix-cell q3">
-        <div class="matrix-cell-header">Delegate</div>
+        <div class="matrix-cell-header">🟡 Delegate</div>
         <div class="matrix-cell-sub">Urgent + Not Important</div>
         <div id="q3-tasks"></div>
-        <div class="matrix-add">
-          <input id="q3-input" placeholder="Add task…" onkeydown="if(event.key==='Enter')addMatrixTask('q3')"/>
-          <button onclick="addMatrixTask('q3')">+</button>
+        <div class="matrix-add" style="display:flex;gap:5px;margin-top:6px">
+          <input id="q3-input" placeholder="Add task…" style="flex:1;font-size:12px;padding:6px 8px;border:0.5px solid var(--border2);border-radius:8px;background:rgba(255,255,255,0.5);color:var(--text);outline:none" onkeydown="if(event.key==='Enter')addDirectMatrixTask('q3')"/>
+          <button onclick="addDirectMatrixTask('q3')" style="padding:0 9px;border:none;border-radius:8px;background:var(--text);color:var(--bg);cursor:pointer;font-size:16px;min-height:30px">+</button>
         </div>
       </div>
       <div class="matrix-cell q4">
-        <div class="matrix-cell-header">Eliminate</div>
+        <div class="matrix-cell-header">⬜ Eliminate</div>
         <div class="matrix-cell-sub">Not Urgent + Not Important</div>
         <div id="q4-tasks"></div>
-        <div class="matrix-add">
-          <input id="q4-input" placeholder="Add task…" onkeydown="if(event.key==='Enter')addMatrixTask('q4')"/>
-          <button onclick="addMatrixTask('q4')">+</button>
+        <div class="matrix-add" style="display:flex;gap:5px;margin-top:6px">
+          <input id="q4-input" placeholder="Add task…" style="flex:1;font-size:12px;padding:6px 8px;border:0.5px solid var(--border2);border-radius:8px;background:rgba(255,255,255,0.5);color:var(--text);outline:none" onkeydown="if(event.key==='Enter')addDirectMatrixTask('q4')"/>
+          <button onclick="addDirectMatrixTask('q4')" style="padding:0 9px;border:none;border-radius:8px;background:var(--text);color:var(--bg);cursor:pointer;font-size:16px;min-height:30px">+</button>
         </div>
       </div>
     </div>
@@ -326,9 +342,7 @@ body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;backgrou
   <div class="view" id="view-meetings">
     <div class="meeting-add-form">
       <h3>➕ Schedule a Meeting</h3>
-      <div class="form-row">
-        <input id="m-title" placeholder="Meeting title" autocomplete="off"/>
-      </div>
+      <div class="form-row"><input id="m-title" placeholder="Meeting title" autocomplete="off"/></div>
       <div class="form-row two">
         <input id="m-date" type="date"/>
         <input id="m-time" type="time"/>
@@ -340,24 +354,16 @@ body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;backgrou
       <div class="form-row">
         <select id="m-type">
           <option value="">Meeting type…</option>
-          <option>1:1</option>
-          <option>Team standup</option>
-          <option>Client call</option>
-          <option>Review</option>
-          <option>Interview</option>
-          <option>Workshop</option>
-          <option>Other</option>
+          <option>1:1</option><option>Team standup</option><option>Client call</option>
+          <option>Review</option><option>Interview</option><option>Workshop</option><option>Other</option>
         </select>
       </div>
-      <div class="form-row">
-        <textarea id="m-notes" placeholder="Notes / agenda (optional)"></textarea>
-      </div>
+      <div class="form-row"><textarea id="m-notes" placeholder="Notes / agenda (optional)"></textarea></div>
       <button class="btn-add-meeting" onclick="addMeeting()">Schedule Meeting</button>
     </div>
     <div class="section-label">Upcoming & Past Meetings</div>
     <div class="meeting-list" id="meeting-list"></div>
   </div>
-
 </div>
 <div class="toast" id="toast"></div>
 
@@ -365,17 +371,20 @@ body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;backgrou
 <script src="https://www.gstatic.com/firebasejs/10.12.0/firebase-firestore-compat.js"></script>
 <script>
 // ── State ──
-let tasks={}, matrix={q1:[],q2:[],q3:[],q4:[]}, meetings=[];
+let tasks={}, directMatrix={q1:[],q2:[],q3:[],q4:[]}, meetings=[];
 let dayDate=new Date(), monthDate=new Date(), calSelected=null, impFlag=false;
-let db=null, unsubscribe=[], deferredPrompt=null;
+let db=null, unsubscribes=[], deferredPrompt=null;
 const isIOS=/iphone|ipad|ipod/i.test(navigator.userAgent);
 const isAndroid=/android/i.test(navigator.userAgent);
 const isStandalone=window.matchMedia('(display-mode:standalone)').matches||navigator.standalone;
 
+const Q_LABELS={q1:'🔴 Do First',q2:'🔵 Schedule',q3:'🟡 Delegate',q4:'⬜ Eliminate'};
+const Q_BADGE={q1:'qbadge-q1',q2:'qbadge-q2',q3:'qbadge-q3',q4:'qbadge-q4'};
+
 // ── Firebase ──
 function loadConfig(){try{return JSON.parse(localStorage.getItem('fb-config'))}catch(e){return null}}
 function saveConfig(c){localStorage.setItem('fb-config',JSON.stringify(c))}
-function resetConfig(){unsubscribe.forEach(u=>u());localStorage.removeItem('fb-config');location.reload()}
+function resetConfig(){unsubscribes.forEach(u=>u());localStorage.removeItem('fb-config');location.reload()}
 
 async function connectFirebase(){
   const apiKey=document.getElementById('cfg-apiKey').value.trim();
@@ -398,19 +407,18 @@ function initFirebase(cfg){
 
 function startSync(){
   setSyncStatus('syncing','Syncing…');
-  // Tasks
-  unsubscribe.push(db.collection('tasks').onSnapshot(snap=>{
+  unsubscribes.push(db.collection('tasks').onSnapshot(snap=>{
     tasks={};snap.forEach(doc=>{tasks[doc.id]=doc.data().list||[]});
     renderDay();renderCalGrid();if(calSelected)renderMonthTasks();
-    setSyncStatus('on','Synced');
+    renderMatrix();setSyncStatus('on','Synced');
   },()=>setSyncStatus('off','Offline')));
-  // Matrix
-  unsubscribe.push(db.collection('matrix').doc('data').onSnapshot(doc=>{
-    if(doc.exists){const d=doc.data();matrix={q1:d.q1||[],q2:d.q2||[],q3:d.q3||[],q4:d.q4||[]};}
+
+  unsubscribes.push(db.collection('directMatrix').doc('data').onSnapshot(doc=>{
+    if(doc.exists){const d=doc.data();directMatrix={q1:d.q1||[],q2:d.q2||[],q3:d.q3||[],q4:d.q4||[]};}
     renderMatrix();
   }));
-  // Meetings
-  unsubscribe.push(db.collection('meetings').onSnapshot(snap=>{
+
+  unsubscribes.push(db.collection('meetings').onSnapshot(snap=>{
     meetings=[];snap.forEach(doc=>{meetings.push({id:doc.id,...doc.data()})});
     meetings.sort((a,b)=>a.datetime.localeCompare(b.datetime));
     renderMeetings();
@@ -421,27 +429,17 @@ function setSyncStatus(s,l){
   const d=document.getElementById('sync-dot'),lb=document.getElementById('sync-label');
   d.className='sync-dot'+(s==='on'?' ':s==='syncing'?' syncing':' off');lb.textContent=l;
 }
-
-async function saveDay(k){
-  if(!db)return;
-  try{await db.collection('tasks').doc(k).set({list:tasks[k]||[]})}catch(e){}
-}
-async function saveMatrix(){
-  if(!db)return;
-  try{await db.collection('matrix').doc('data').set(matrix)}catch(e){}
-}
+async function saveDay(k){if(!db)return;try{await db.collection('tasks').doc(k).set({list:tasks[k]||[]})}catch(e){}}
+async function saveDirectMatrix(){if(!db)return;try{await db.collection('directMatrix').doc('data').set(directMatrix)}catch(e){}}
 
 // ── App init ──
 function showApp(){
   document.getElementById('setup-screen').style.display='none';
   document.getElementById('main-app').style.display='block';
   if(isStandalone)document.getElementById('install-banner').classList.add('hidden');
-  // Set default date fields for meetings
-  const today=new Date().toISOString().slice(0,10);
-  document.getElementById('m-date').value=today;
+  document.getElementById('m-date').value=new Date().toISOString().slice(0,10);
   renderDay();
 }
-
 window.addEventListener('load',()=>{
   const cfg=loadConfig();
   if(cfg)initFirebase(cfg);
@@ -456,7 +454,7 @@ function showHowTo(){
   const s=document.getElementById('install-steps-txt');s.classList.add('show');
   if(isIOS)s.innerHTML='<b>iPhone (Safari):</b> Tap Share (□↑) → Add to Home Screen → Add';
   else if(isAndroid)s.innerHTML='<b>Android (Chrome):</b> Tap ⋮ menu → Add to Home screen';
-  else s.innerHTML='<b>Chrome/Edge:</b> Click ⊕ in address bar → Install<br><b>iPhone:</b> Safari → Share → Add to Home Screen<br><b>Android:</b> Chrome ⋮ → Add to Home screen';
+  else s.innerHTML='<b>Chrome/Edge:</b> Click ⊕ in address bar → Install<br><b>iPhone:</b> Safari Share → Add to Home Screen<br><b>Android:</b> Chrome ⋮ → Add to Home screen';
 }
 function dismissBanner(){document.getElementById('install-banner').classList.add('hidden')}
 
@@ -487,17 +485,25 @@ function fmtDay(d){
 }
 
 // ── Day view ──
-function toggleFlag(){impFlag=!impFlag;document.getElementById('flag-btn').style.opacity=impFlag?'1':'.6'}
+function toggleFlag(){impFlag=!impFlag;document.getElementById('flag-btn').classList.toggle('on',impFlag)}
 function addTask(){
   const inp=document.getElementById('day-input'),text=inp.value.trim();if(!text)return;
-  getTasks(key(dayDate)).push({text,done:false,imp:impFlag,id:Date.now()});
-  inp.value='';impFlag=false;document.getElementById('flag-btn').style.opacity='.6';
+  const quadrant=document.getElementById('day-quadrant').value;
+  getTasks(key(dayDate)).push({text,done:false,imp:impFlag,quadrant:quadrant||null,id:Date.now()});
+  inp.value='';impFlag=false;
+  document.getElementById('flag-btn').classList.remove('on');
+  document.getElementById('day-quadrant').value='';
   renderDay();saveDay(key(dayDate));
 }
+
 function taskHTML(t,i,k){
+  const qBadge=t.quadrant?`<span class="task-quadrant-badge ${Q_BADGE[t.quadrant]}">${Q_LABELS[t.quadrant]}</span>`:'';
   return`<div class="task${t.done?' done':''}${t.imp?' important':''}">
     <div class="check${t.done?' checked':''}" onclick="toggleDone('${k}',${i})">${t.done?'✓':''}</div>
-    <span class="task-text">${esc(t.text)}${t.pushed?'<span class="pushed-badge">pushed</span>':''}</span>
+    <div class="task-body">
+      <div class="task-text">${esc(t.text)}${t.pushed?'<span class="pushed-badge">pushed</span>':''}</div>
+      ${qBadge}
+    </div>
     <div class="task-actions">
       <span class="flag-ind${t.imp?' on':''}" onclick="toggleImp('${k}',${i})">🚩</span>
       <button class="push-btn" onclick="pushTask('${k}',${i})">→ tmrw</button>
@@ -505,21 +511,22 @@ function taskHTML(t,i,k){
     </div>
   </div>`;
 }
+
 function renderDay(){
   document.getElementById('day-title').textContent=fmtDay(dayDate);
   const k=key(dayDate),list=getTasks(k),el=document.getElementById('day-tasks');
   el.innerHTML=list.length?list.map((t,i)=>taskHTML(t,i,k)).join(''):'<div class="empty">📋<br>No tasks for this day</div>';
 }
 function shiftDay(d){dayDate.setDate(dayDate.getDate()+d);renderDay()}
-function toggleDone(k,i){getTasks(k)[i].done=!getTasks(k)[i].done;if(k===key(dayDate))renderDay();if(calSelected===k)renderMonthTasks();renderCalGrid();saveDay(k)}
+function toggleDone(k,i){getTasks(k)[i].done=!getTasks(k)[i].done;if(k===key(dayDate))renderDay();if(calSelected===k)renderMonthTasks();renderCalGrid();renderMatrix();saveDay(k)}
 function toggleImp(k,i){getTasks(k)[i].imp=!getTasks(k)[i].imp;if(k===key(dayDate))renderDay();if(calSelected===k)renderMonthTasks();renderCalGrid();saveDay(k)}
-function delTask(k,i){getTasks(k).splice(i,1);if(k===key(dayDate))renderDay();if(calSelected===k)renderMonthTasks();renderCalGrid();saveDay(k)}
+function delTask(k,i){getTasks(k).splice(i,1);if(k===key(dayDate))renderDay();if(calSelected===k)renderMonthTasks();renderCalGrid();renderMatrix();saveDay(k)}
 function pushTask(k,i){
   const t={...getTasks(k)[i],pushed:true,done:false};
   const next=new Date(k);next.setDate(next.getDate()+1);const nk=key(next);
   getTasks(nk).push(t);getTasks(k).splice(i,1);
   toast('Pushed to '+next.toLocaleDateString('en-IN',{weekday:'short',day:'numeric',month:'short'}));
-  if(k===key(dayDate))renderDay();if(calSelected===k)renderMonthTasks();renderCalGrid();saveDay(k);saveDay(nk);
+  if(k===key(dayDate))renderDay();if(calSelected===k)renderMonthTasks();renderCalGrid();renderMatrix();saveDay(k);saveDay(nk);
 }
 
 // ── Month view ──
@@ -547,32 +554,103 @@ function renderMonthTasks(){
   const d=new Date(calSelected),label=d.toLocaleDateString('en-IN',{weekday:'long',day:'numeric',month:'long'});
   let html=`<div class="month-day-header">${label}</div>`;
   html+=list.length?`<div class="task-list">${list.map((t,i)=>taskHTML(t,i,calSelected)).join('')}</div>`:'<div style="font-size:13px;color:var(--text3);padding:8px 0">No tasks</div>';
-  html+=`<div class="month-add"><input id="month-inp" placeholder="Add task…" onkeydown="if(event.key==='Enter')addMonthTask()" autocomplete="off"/><button class="add-btn" onclick="addMonthTask()">+</button></div>`;
+  html+=`<div class="month-add">
+    <input id="month-inp" placeholder="Add task…" onkeydown="if(event.key==='Enter')addMonthTask()" autocomplete="off"/>
+    <select id="month-quadrant">
+      <option value="">— Quadrant —</option>
+      <option value="q1">🔴 Do First</option>
+      <option value="q2">🔵 Schedule</option>
+      <option value="q3">🟡 Delegate</option>
+      <option value="q4">⬜ Eliminate</option>
+    </select>
+    <button class="add-btn" onclick="addMonthTask()">+</button>
+  </div>`;
   el.innerHTML=html;
 }
 function addMonthTask(){
   const inp=document.getElementById('month-inp'),text=inp.value.trim();if(!text)return;
-  getTasks(calSelected).push({text,done:false,imp:false,id:Date.now()});
-  inp.value='';renderMonthTasks();renderCalGrid();saveDay(calSelected);
+  const quadrant=document.getElementById('month-quadrant').value;
+  getTasks(calSelected).push({text,done:false,imp:false,quadrant:quadrant||null,id:Date.now()});
+  inp.value='';renderMonthTasks();renderCalGrid();renderMatrix();saveDay(calSelected);
 }
 
 // ── Eisenhower Matrix ──
-function addMatrixTask(q){
-  const inp=document.getElementById(q+'-input'),text=inp.value.trim();if(!text)return;
-  matrix[q].push({text,done:false,id:Date.now()});
-  inp.value='';renderMatrix();saveMatrix();
+// Collects tasks from ALL days that have a quadrant, plus direct matrix entries
+function getMatrixTasks(){
+  const combined={q1:[],q2:[],q3:[],q4:[]};
+  // From all task days
+  Object.entries(tasks).forEach(([dateKey,list])=>{
+    list.forEach((t,i)=>{
+      if(t.quadrant&&combined[t.quadrant]){
+        combined[t.quadrant].push({...t,_source:'task',_dateKey:dateKey,_index:i,
+          _dateLabel:new Date(dateKey).toLocaleDateString('en-IN',{day:'numeric',month:'short'})});
+      }
+    });
+  });
+  // From direct matrix entries
+  ['q1','q2','q3','q4'].forEach(q=>{
+    directMatrix[q].forEach((t,i)=>{
+      combined[q].push({...t,_source:'direct',_q:q,_index:i});
+    });
+  });
+  return combined;
 }
-function toggleMatrixDone(q,i){matrix[q][i].done=!matrix[q][i].done;renderMatrix();saveMatrix()}
-function delMatrixTask(q,i){matrix[q].splice(i,1);renderMatrix();saveMatrix()}
+
+function addDirectMatrixTask(q){
+  const inp=document.getElementById(q+'-input'),text=inp.value.trim();if(!text)return;
+  directMatrix[q].push({text,done:false,id:Date.now()});
+  inp.value='';renderMatrix();saveDirectMatrix();
+}
+
+function toggleMatrixTaskDone(source,q,dateKey,index){
+  if(source==='task'){
+    if(tasks[dateKey]&&tasks[dateKey][index]){
+      tasks[dateKey][index].done=!tasks[dateKey][index].done;
+      if(dateKey===key(dayDate))renderDay();
+      if(calSelected===dateKey)renderMonthTasks();
+      renderCalGrid();saveDay(dateKey);
+    }
+  } else {
+    directMatrix[q][index].done=!directMatrix[q][index].done;
+    saveDirectMatrix();
+  }
+  renderMatrix();
+}
+
+function delMatrixTask(source,q,dateKey,index){
+  if(source==='task'){
+    if(tasks[dateKey]){
+      tasks[dateKey][index].quadrant=null;
+      if(dateKey===key(dayDate))renderDay();
+      if(calSelected===dateKey)renderMonthTasks();
+      saveDay(dateKey);
+    }
+  } else {
+    directMatrix[q].splice(index,1);
+    saveDirectMatrix();
+  }
+  renderMatrix();
+}
+
 function renderMatrix(){
+  const combined=getMatrixTasks();
   ['q1','q2','q3','q4'].forEach(q=>{
     const el=document.getElementById(q+'-tasks');if(!el)return;
-    el.innerHTML=matrix[q].map((t,i)=>`
-      <div class="matrix-task${t.done?' done':''}" onclick="toggleMatrixDone('${q}',${i})">
-        <div class="matrix-task-check">${t.done?'✓':''}</div>
-        <span style="flex:1;font-size:12px">${esc(t.text)}</span>
-        <span class="matrix-task-del" onclick="event.stopPropagation();delMatrixTask('${q}',${i})">✕</span>
-      </div>`).join('');
+    const list=combined[q];
+    if(!list.length){el.innerHTML='<div style="font-size:11px;color:var(--text3);padding:4px 0">No tasks yet</div>';return;}
+    el.innerHTML=list.map((t,idx)=>{
+      const src=t._source,dk=t._dateKey,origIdx=t._index;
+      const sourceLabel=src==='task'?`<div class="matrix-source">📅 ${t._dateLabel}</div>`:'';
+      return`<div class="matrix-task${t.done?' done-task':''}">
+        <div class="matrix-task-check" onclick="toggleMatrixTaskDone('${src}','${q}','${dk||''}',${origIdx})">${t.done?'✓':''}</div>
+        <div style="flex:1;min-width:0">
+          <div class="matrix-task-text">${esc(t.text)}</div>
+          ${sourceLabel}
+        </div>
+        ${t.imp?'<span class="matrix-task-imp">🚩</span>':''}
+        <span class="matrix-task-del" onclick="delMatrixTask('${src}','${q}','${dk||''}',${origIdx})">✕</span>
+      </div>`;
+    }).join('');
   });
 }
 
@@ -582,33 +660,22 @@ function addMeeting(){
   const date=document.getElementById('m-date').value;
   const time=document.getElementById('m-time').value;
   if(!title||!date||!time){toast('Please add title, date and time');return;}
-  const meeting={
-    title,date,time,
-    datetime:date+'T'+time,
+  db.collection('meetings').add({
+    title,date,time,datetime:date+'T'+time,
     duration:document.getElementById('m-duration').value||'',
     with:document.getElementById('m-with').value.trim(),
     type:document.getElementById('m-type').value,
     notes:document.getElementById('m-notes').value.trim(),
-    done:false,
-    created:Date.now()
-  };
-  db.collection('meetings').add(meeting).then(()=>{
-    document.getElementById('m-title').value='';
-    document.getElementById('m-time').value='';
-    document.getElementById('m-duration').value='';
-    document.getElementById('m-with').value='';
+    done:false,created:Date.now()
+  }).then(()=>{
+    ['m-title','m-time','m-duration','m-with','m-notes'].forEach(id=>document.getElementById(id).value='');
     document.getElementById('m-type').value='';
-    document.getElementById('m-notes').value='';
+    document.getElementById('m-date').value=new Date().toISOString().slice(0,10);
     toast('Meeting scheduled!');
   });
 }
-function toggleMeetingDone(id){
-  const m=meetings.find(m=>m.id===id);if(!m)return;
-  db.collection('meetings').doc(id).update({done:!m.done});
-}
-function delMeeting(id){
-  if(confirm('Delete this meeting?'))db.collection('meetings').doc(id).delete();
-}
+function toggleMeetingDone(id){const m=meetings.find(m=>m.id===id);if(m)db.collection('meetings').doc(id).update({done:!m.done})}
+function delMeeting(id){if(confirm('Delete this meeting?'))db.collection('meetings').doc(id).delete()}
 function renderMeetings(){
   const el=document.getElementById('meeting-list');if(!el)return;
   if(!meetings.length){el.innerHTML='<div class="empty">🤝<br>No meetings yet</div>';return;}
@@ -624,7 +691,7 @@ function renderMeetings(){
       </div>
       <div class="meeting-meta">
         <span>📅 ${dateStr}</span>
-        ${m.duration?`<span>⏱ ${m.duration} mins</span>`:''}
+        ${m.duration?`<span>⏱ ${m.duration}m</span>`:''}
         ${m.with?`<span>👤 ${esc(m.with)}</span>`:''}
         ${m.type?`<span>🏷 ${esc(m.type)}</span>`:''}
         ${isPast&&!m.done?`<span style="color:var(--text3)">· Past</span>`:''}
