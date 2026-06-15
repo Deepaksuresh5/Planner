@@ -7,155 +7,211 @@
 <meta name="apple-mobile-web-app-capable" content="yes"/>
 <meta name="apple-mobile-web-app-status-bar-style" content="black"/>
 <meta name="apple-mobile-web-app-title" content="Planner"/>
-<meta name="description" content="Daily and monthly task planner with real-time sync"/>
+<meta name="description" content="Daily planner with Eisenhower Matrix and Meetings"/>
 <link rel="manifest" href="manifest.json"/>
 <link rel="apple-touch-icon" href="icons/icon-192.png"/>
 <title>Planner</title>
 <style>
 *{box-sizing:border-box;margin:0;padding:0;-webkit-tap-highlight-color:transparent}
 :root{
-  --bg:#ffffff;--bg2:#f5f5f3;--bg3:#eeede9;
+  --bg:#fff;--bg2:#f5f5f3;--bg3:#eee;
   --text:#1a1a1a;--text2:#666;--text3:#aaa;
-  --border:rgba(0,0,0,0.12);--border2:rgba(0,0,0,0.22);
-  --amber:#BA7517;--amber-bg:#FAEEDA;--amber-text:#BA7517;
-  --red:#E24B4A;--blue:#185FA5;--blue-bg:#E6F1FB;
-  --green:#3B6D11;--green-bg:#EAF3DE;
+  --border:rgba(0,0,0,0.1);--border2:rgba(0,0,0,0.2);
+  --amber:#BA7517;--amber-bg:#FAEEDA;
+  --red:#E24B4A;--red-bg:#FDECEC;
+  --blue:#185FA5;--blue-bg:#E6F1FB;
+  --green:#2E7D32;--green-bg:#EAF3DE;
+  --purple:#6B3FA0;--purple-bg:#F0EAF8;
   --radius:10px;--radius-lg:14px;
 }
 @media(prefers-color-scheme:dark){:root{
   --bg:#1c1c1e;--bg2:#2c2c2e;--bg3:#3a3a3c;
   --text:#f2f2f7;--text2:#aeaeb2;--text3:#636366;
-  --border:rgba(255,255,255,0.12);--border2:rgba(255,255,255,0.22);
-  --amber-bg:#3a2a00;--amber-text:#f0a940;
-  --blue-bg:#0d2a45;--green-bg:#1a2e0a;
+  --border:rgba(255,255,255,0.1);--border2:rgba(255,255,255,0.2);
+  --amber-bg:#3a2a00;--red-bg:#3a1010;--blue-bg:#0d2a45;--green-bg:#1a2e0a;--purple-bg:#2a1a3a;
 }}
-body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;background:var(--bg);color:var(--text);min-height:100vh;max-width:600px;margin:0 auto}
-.app{padding:16px;padding-bottom:40px}
+body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;background:var(--bg);color:var(--text);min-height:100vh;max-width:640px;margin:0 auto}
+.app{padding:14px;padding-bottom:80px}
 
-/* Setup screen */
+/* Setup */
 #setup-screen{min-height:100vh;display:flex;flex-direction:column;align-items:center;justify-content:center;padding:24px;text-align:center}
-#setup-screen h1{font-size:24px;font-weight:600;margin-bottom:8px}
-#setup-screen p{font-size:14px;color:var(--text2);margin-bottom:24px;line-height:1.6}
-.setup-card{background:var(--bg2);border-radius:var(--radius-lg);padding:20px;width:100%;max-width:400px;text-align:left;margin-bottom:16px}
-.setup-card h3{font-size:14px;font-weight:600;margin-bottom:12px;color:var(--text)}
-.setup-card label{font-size:12px;color:var(--text2);display:block;margin-bottom:4px;margin-top:10px}
-.setup-card label:first-of-type{margin-top:0}
-.setup-card input{width:100%;font-size:13px;padding:9px 11px;border:0.5px solid var(--border2);border-radius:var(--radius);background:var(--bg);color:var(--text);outline:none;font-family:monospace}
-.setup-card input:focus{border-color:var(--amber)}
-.setup-card input::placeholder{color:var(--text3)}
-.btn-primary{width:100%;padding:12px;border:none;border-radius:var(--radius);background:var(--text);color:var(--bg);font-size:15px;font-weight:600;cursor:pointer;margin-top:16px}
-.btn-primary:active{opacity:.85}
-.setup-steps{background:var(--blue-bg);border-radius:var(--radius-lg);padding:16px;width:100%;max-width:400px;font-size:13px;color:var(--text);line-height:1.8}
+#setup-screen h1{font-size:24px;font-weight:700;margin-bottom:8px}
+#setup-screen p{font-size:14px;color:var(--text2);margin-bottom:20px;line-height:1.6}
+.setup-steps{background:var(--blue-bg);border-radius:var(--radius-lg);padding:16px;width:100%;max-width:400px;font-size:13px;color:var(--text);line-height:1.8;text-align:left;margin-bottom:16px}
 .setup-steps a{color:var(--blue)}
 .setup-steps ol{padding-left:18px}
-.setup-steps li{margin-bottom:4px}
+.setup-card{background:var(--bg2);border-radius:var(--radius-lg);padding:20px;width:100%;max-width:400px;text-align:left}
+.setup-card h3{font-size:14px;font-weight:600;margin-bottom:12px}
+.setup-card label{font-size:12px;color:var(--text2);display:block;margin-bottom:4px;margin-top:10px}
+.setup-card input{width:100%;font-size:13px;padding:9px 11px;border:0.5px solid var(--border2);border-radius:var(--radius);background:var(--bg);color:var(--text);outline:none;font-family:monospace}
+.setup-card input:focus{border-color:var(--amber)}
+.btn-primary{width:100%;padding:12px;border:none;border-radius:var(--radius);background:var(--text);color:var(--bg);font-size:15px;font-weight:600;cursor:pointer;margin-top:16px}
 .setup-error{color:var(--red);font-size:13px;margin-top:8px;display:none}
 
-/* Sync indicator */
-.topbar{display:flex;align-items:center;justify-content:space-between;margin-bottom:14px}
-.sync-dot{width:8px;height:8px;border-radius:50%;background:var(--green);flex-shrink:0}
+/* Top bar */
+.topbar{display:flex;align-items:center;justify-content:space-between;margin-bottom:12px}
+.sync-row{display:flex;align-items:center;gap:5px}
+.sync-dot{width:7px;height:7px;border-radius:50%;background:var(--green)}
 .sync-dot.off{background:var(--text3)}
 .sync-dot.syncing{background:var(--amber);animation:pulse 1s infinite}
-@keyframes pulse{0%,100%{opacity:1}50%{opacity:.4}}
-.sync-label{font-size:11px;color:var(--text3);margin-left:5px}
-.logout-btn{font-size:12px;color:var(--text3);background:none;border:none;cursor:pointer;padding:2px 6px}
+@keyframes pulse{0%,100%{opacity:1}50%{opacity:.3}}
+.sync-label{font-size:11px;color:var(--text3)}
+.cfg-btn{font-size:12px;color:var(--text3);background:none;border:none;cursor:pointer}
 
 /* Install banner */
-.install-banner{display:flex;align-items:flex-start;gap:10px;padding:13px 14px;background:var(--blue-bg);border-radius:var(--radius-lg);margin-bottom:16px;border:0.5px solid rgba(24,95,165,0.25)}
+.install-banner{display:flex;align-items:flex-start;gap:10px;padding:12px 14px;background:var(--blue-bg);border-radius:var(--radius-lg);margin-bottom:14px;border:0.5px solid rgba(24,95,165,0.2)}
 .install-banner.hidden{display:none}
-.install-info strong{font-size:13px;font-weight:600;color:var(--blue);display:block;margin-bottom:3px}
-.install-info p{font-size:12px;color:var(--text2);line-height:1.5;margin-bottom:6px}
+.install-info strong{font-size:13px;font-weight:600;color:var(--blue);display:block;margin-bottom:2px}
+.install-info p{font-size:12px;color:var(--text2);margin-bottom:6px}
 .install-steps-txt{font-size:12px;color:var(--text2);line-height:1.7;display:none;margin-bottom:6px}
 .install-steps-txt.show{display:block}
-.install-btns{display:flex;gap:8px;flex-wrap:wrap}
-.btn-install{padding:7px 13px;border:none;border-radius:8px;font-size:13px;cursor:pointer;font-weight:500;background:var(--blue);color:#fff;display:none}
-.btn-how{padding:7px 13px;border:1px solid var(--blue);border-radius:8px;font-size:13px;cursor:pointer;font-weight:500;background:transparent;color:var(--blue)}
-.btn-dismiss{background:transparent;border:none;color:var(--text3);font-size:12px;cursor:pointer;padding:4px 0}
+.install-btns{display:flex;gap:8px;flex-wrap:wrap;align-items:center}
+.btn-install{padding:6px 12px;border:none;border-radius:8px;font-size:12px;cursor:pointer;font-weight:500;background:var(--blue);color:#fff;display:none}
+.btn-how{padding:6px 12px;border:1px solid var(--blue);border-radius:8px;font-size:12px;cursor:pointer;background:transparent;color:var(--blue)}
+.btn-dismiss{background:none;border:none;color:var(--text3);font-size:12px;cursor:pointer}
 
-.tabs{display:flex;gap:8px;margin-bottom:18px;background:var(--bg2);padding:4px;border-radius:var(--radius-lg)}
-.tab{flex:1;padding:9px 0;border:none;border-radius:10px;background:transparent;color:var(--text2);font-size:14px;cursor:pointer;font-weight:500;transition:all .15s;display:flex;align-items:center;justify-content:center;gap:6px}
-.tab svg{width:16px;height:16px;stroke:currentColor;fill:none;stroke-width:2;stroke-linecap:round;stroke-linejoin:round}
+/* Tabs */
+.tabs{display:flex;gap:6px;margin-bottom:16px;background:var(--bg2);padding:4px;border-radius:var(--radius-lg);overflow-x:auto}
+.tab{flex:1;min-width:0;padding:8px 4px;border:none;border-radius:10px;background:transparent;color:var(--text2);font-size:12px;cursor:pointer;font-weight:500;white-space:nowrap;display:flex;align-items:center;justify-content:center;gap:4px}
 .tab.active{background:var(--bg);color:var(--text);box-shadow:0 1px 4px rgba(0,0,0,0.1)}
 .view{display:none}.view.active{display:block}
-.header{display:flex;align-items:center;justify-content:space-between;margin-bottom:16px}
-.nav-btn{background:var(--bg2);border:0.5px solid var(--border);border-radius:var(--radius);width:36px;height:36px;cursor:pointer;color:var(--text);display:flex;align-items:center;justify-content:center;flex-shrink:0}
-.nav-btn svg{width:18px;height:18px;stroke:currentColor;fill:none;stroke-width:2;stroke-linecap:round;stroke-linejoin:round}
-.date-title{font-size:17px;font-weight:600;color:var(--text);text-align:center;flex:1}
-.add-row{display:flex;gap:8px;margin-bottom:16px}
-.add-row input{flex:1;font-size:15px;padding:10px 12px;border:0.5px solid var(--border2);border-radius:var(--radius);background:var(--bg2);color:var(--text);outline:none}
-.add-row input:focus{border-color:var(--amber)}
+
+/* Header nav */
+.header{display:flex;align-items:center;justify-content:space-between;margin-bottom:14px}
+.nav-btn{background:var(--bg2);border:0.5px solid var(--border);border-radius:var(--radius);width:34px;height:34px;cursor:pointer;color:var(--text);display:flex;align-items:center;justify-content:center;flex-shrink:0;font-size:16px}
+.date-title{font-size:16px;font-weight:600;text-align:center;flex:1}
+
+/* Add row */
+.add-row{display:flex;gap:7px;margin-bottom:14px}
+.add-row input,.add-row select{font-size:14px;padding:9px 11px;border:0.5px solid var(--border2);border-radius:var(--radius);background:var(--bg2);color:var(--text);outline:none}
+.add-row input{flex:1}
+.add-row select{max-width:130px}
+.add-row input:focus,.add-row select:focus{border-color:var(--amber)}
 .add-row input::placeholder{color:var(--text3)}
-.flag-btn{padding:0 12px;border:0.5px solid var(--border2);border-radius:var(--radius);background:var(--bg2);cursor:pointer;display:flex;align-items:center;color:var(--text3)}
-.flag-btn svg{width:18px;height:18px;stroke:currentColor;fill:none;stroke-width:2;stroke-linecap:round;stroke-linejoin:round}
-.flag-btn.on{border-color:var(--amber);background:var(--amber-bg);color:var(--amber-text)}
-.add-btn{padding:0 16px;border:none;border-radius:var(--radius);background:var(--text);color:var(--bg);cursor:pointer;font-size:22px;font-weight:300;line-height:1;min-height:42px}
-.section-label{font-size:11px;color:var(--text3);text-transform:uppercase;letter-spacing:.07em;margin-bottom:8px}
-.task-list{display:flex;flex-direction:column;gap:7px}
-.task{display:flex;align-items:flex-start;gap:10px;padding:11px 13px;border:0.5px solid var(--border);border-radius:var(--radius-lg);background:var(--bg)}
-.task.done{opacity:.5}
-.task.important{border-left:3px solid var(--amber);padding-left:11px}
-.check{width:22px;height:22px;border-radius:6px;border:1.5px solid var(--border2);flex-shrink:0;cursor:pointer;margin-top:1px;display:flex;align-items:center;justify-content:center;background:var(--bg)}
-.check.checked{background:var(--amber);border-color:var(--amber)}
-.check svg{width:13px;height:13px;stroke:#fff;fill:none;stroke-width:2.5;stroke-linecap:round;stroke-linejoin:round;display:none}
-.check.checked svg{display:block}
-.task-text{flex:1;font-size:14px;color:var(--text);line-height:1.5;word-break:break-word;padding-top:2px}
+.flag-btn{padding:0 11px;border:0.5px solid var(--border2);border-radius:var(--radius);background:var(--bg2);cursor:pointer;color:var(--text3);font-size:16px;display:flex;align-items:center}
+.flag-btn.on{border-color:var(--amber);background:var(--amber-bg);color:var(--amber)}
+.add-btn{padding:0 14px;border:none;border-radius:var(--radius);background:var(--text);color:var(--bg);cursor:pointer;font-size:20px;min-height:40px}
+
+/* Tasks */
+.section-label{font-size:11px;color:var(--text3);text-transform:uppercase;letter-spacing:.07em;margin-bottom:8px;margin-top:4px}
+.task-list{display:flex;flex-direction:column;gap:6px}
+.task{display:flex;align-items:flex-start;gap:9px;padding:10px 12px;border:0.5px solid var(--border);border-radius:var(--radius-lg);background:var(--bg)}
+.task.done{opacity:.45}
+.task.important{border-left:3px solid var(--amber);padding-left:10px}
+.check{width:20px;height:20px;border-radius:6px;border:1.5px solid var(--border2);flex-shrink:0;cursor:pointer;margin-top:1px;display:flex;align-items:center;justify-content:center;font-size:12px}
+.check.checked{background:var(--amber);border-color:var(--amber);color:#fff}
+.task-text{flex:1;font-size:14px;line-height:1.5;word-break:break-word;padding-top:1px}
 .task.done .task-text{text-decoration:line-through;color:var(--text3)}
-.task-actions{display:flex;align-items:center;gap:6px;flex-shrink:0}
-.flag-ind{cursor:pointer;display:flex;align-items:center;opacity:.35}
-.flag-ind svg{width:16px;height:16px;stroke:currentColor;fill:none;stroke-width:2;stroke-linecap:round;stroke-linejoin:round}
+.task-actions{display:flex;align-items:center;gap:5px;flex-shrink:0}
+.flag-ind{cursor:pointer;font-size:14px;opacity:.3}
 .flag-ind.on{opacity:1;color:var(--amber)}
-.push-btn{font-size:11px;padding:4px 9px;border:0.5px solid var(--border);border-radius:20px;color:var(--text2);background:var(--bg2);cursor:pointer;white-space:nowrap}
-.del-btn{display:flex;align-items:center;cursor:pointer;opacity:.35;color:var(--text)}
-.del-btn svg{width:16px;height:16px;stroke:currentColor;fill:none;stroke-width:2;stroke-linecap:round;stroke-linejoin:round}
-.pushed-badge{font-size:10px;padding:2px 6px;background:var(--blue-bg);color:var(--blue);border-radius:8px;margin-left:6px}
-.empty{text-align:center;padding:40px 16px;color:var(--text3);font-size:14px}
-.empty svg{width:32px;height:32px;stroke:currentColor;fill:none;stroke-width:1.5;stroke-linecap:round;stroke-linejoin:round;margin-bottom:10px;display:block;margin-inline:auto}
-.cal-grid{display:grid;grid-template-columns:repeat(7,1fr);gap:3px;margin-bottom:14px}
-.cal-lbl{text-align:center;font-size:11px;color:var(--text3);padding:5px 0;font-weight:500}
-.cal-cell{aspect-ratio:1;border-radius:var(--radius);display:flex;flex-direction:column;align-items:center;justify-content:center;cursor:pointer;border:0.5px solid transparent;position:relative;font-size:13px;color:var(--text2)}
+.push-btn{font-size:11px;padding:3px 8px;border:0.5px solid var(--border);border-radius:20px;color:var(--text2);background:var(--bg2);cursor:pointer;white-space:nowrap}
+.del-btn{cursor:pointer;opacity:.3;font-size:14px}
+.del-btn:hover{opacity:.8}
+.pushed-badge{font-size:10px;padding:2px 6px;background:var(--blue-bg);color:var(--blue);border-radius:8px;margin-left:5px}
+.empty{text-align:center;padding:32px 16px;color:var(--text3);font-size:14px}
+
+/* Calendar */
+.cal-grid{display:grid;grid-template-columns:repeat(7,1fr);gap:3px;margin-bottom:12px}
+.cal-lbl{text-align:center;font-size:11px;color:var(--text3);padding:4px 0;font-weight:500}
+.cal-cell{aspect-ratio:1;border-radius:8px;display:flex;flex-direction:column;align-items:center;justify-content:center;cursor:pointer;border:0.5px solid transparent;position:relative;font-size:13px;color:var(--text2)}
 .cal-cell:hover{background:var(--bg2)}
 .cal-cell.today{background:var(--text);color:var(--bg);font-weight:600}
 .cal-cell.selected:not(.today){border-color:var(--amber);color:var(--text)}
 .cal-cell.faded{color:var(--text3)}
-.dot{position:absolute;bottom:3px;width:4px;height:4px;border-radius:50%;background:var(--amber)}
+.dot{position:absolute;bottom:2px;width:4px;height:4px;border-radius:50%;background:var(--amber)}
 .cal-cell.has-imp .dot{background:var(--red)}
-.month-day-header{font-size:14px;font-weight:600;color:var(--text2);margin:14px 0 10px;padding-bottom:8px;border-bottom:0.5px solid var(--border)}
-.month-add{display:flex;gap:8px;margin-top:12px}
-.month-add input{flex:1;font-size:14px;padding:9px 12px;border:0.5px solid var(--border2);border-radius:var(--radius);background:var(--bg2);color:var(--text);outline:none}
+.month-day-header{font-size:14px;font-weight:600;color:var(--text2);margin:12px 0 8px;padding-bottom:6px;border-bottom:0.5px solid var(--border)}
+.month-add{display:flex;gap:7px;margin-top:10px}
+.month-add input{flex:1;font-size:14px;padding:8px 11px;border:0.5px solid var(--border2);border-radius:var(--radius);background:var(--bg2);color:var(--text);outline:none}
 .month-add input::placeholder{color:var(--text3)}
+
+/* Eisenhower Matrix */
+.matrix-intro{font-size:13px;color:var(--text2);margin-bottom:12px;line-height:1.5}
+.matrix-grid{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-bottom:16px}
+.matrix-cell{border-radius:var(--radius-lg);padding:12px;min-height:140px;border:0.5px solid var(--border)}
+.matrix-cell.q1{background:var(--red-bg);border-color:rgba(226,75,74,0.2)}
+.matrix-cell.q2{background:var(--blue-bg);border-color:rgba(24,95,165,0.2)}
+.matrix-cell.q3{background:var(--amber-bg);border-color:rgba(186,117,23,0.2)}
+.matrix-cell.q4{background:var(--bg2);border-color:var(--border)}
+.matrix-cell-header{font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:.06em;margin-bottom:4px}
+.q1 .matrix-cell-header{color:var(--red)}
+.q2 .matrix-cell-header{color:var(--blue)}
+.q3 .matrix-cell-header{color:var(--amber)}
+.q4 .matrix-cell-header{color:var(--text3)}
+.matrix-cell-sub{font-size:10px;color:var(--text3);margin-bottom:8px}
+.matrix-task{font-size:12px;padding:5px 8px;background:rgba(255,255,255,0.6);border-radius:7px;margin-bottom:5px;display:flex;align-items:center;gap:6px;cursor:pointer;border:0.5px solid rgba(0,0,0,0.06)}
+@media(prefers-color-scheme:dark){.matrix-task{background:rgba(255,255,255,0.07)}}
+.matrix-task.done{opacity:.4;text-decoration:line-through}
+.matrix-task-check{width:14px;height:14px;border-radius:4px;border:1.5px solid currentColor;flex-shrink:0;display:flex;align-items:center;justify-content:center;font-size:9px}
+.q1 .matrix-task-check{color:var(--red)}
+.q2 .matrix-task-check{color:var(--blue)}
+.q3 .matrix-task-check{color:var(--amber)}
+.q4 .matrix-task-check{color:var(--text3)}
+.matrix-task-del{margin-left:auto;opacity:.4;font-size:11px;flex-shrink:0}
+.matrix-add{display:flex;gap:6px;margin-top:6px}
+.matrix-add input{flex:1;font-size:12px;padding:6px 8px;border:0.5px solid var(--border2);border-radius:8px;background:rgba(255,255,255,0.5);color:var(--text);outline:none}
+@media(prefers-color-scheme:dark){.matrix-add input{background:rgba(255,255,255,0.07)}}
+.matrix-add input::placeholder{color:var(--text3)}
+.matrix-add button{padding:0 10px;border:none;border-radius:8px;background:var(--text);color:var(--bg);cursor:pointer;font-size:16px;min-height:32px}
+.matrix-axis{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-bottom:4px}
+.matrix-axis-label{text-align:center;font-size:11px;color:var(--text3);font-weight:500}
+
+/* Meetings */
+.meeting-add-form{background:var(--bg2);border-radius:var(--radius-lg);padding:14px;margin-bottom:14px;border:0.5px solid var(--border)}
+.meeting-add-form h3{font-size:13px;font-weight:600;margin-bottom:10px}
+.form-row{display:flex;gap:7px;margin-bottom:8px;flex-wrap:wrap}
+.form-row input,.form-row select,.form-row textarea{font-size:13px;padding:8px 10px;border:0.5px solid var(--border2);border-radius:var(--radius);background:var(--bg);color:var(--text);outline:none;width:100%}
+.form-row input:focus,.form-row select:focus,.form-row textarea:focus{border-color:var(--amber)}
+.form-row input::placeholder,.form-row textarea::placeholder{color:var(--text3)}
+.form-row textarea{resize:none;height:60px;font-family:inherit}
+.form-row.two{display:grid;grid-template-columns:1fr 1fr;gap:7px}
+.form-row.three{display:grid;grid-template-columns:1fr 1fr 1fr;gap:7px}
+.btn-add-meeting{width:100%;padding:10px;border:none;border-radius:var(--radius);background:var(--text);color:var(--bg);font-size:14px;font-weight:600;cursor:pointer}
+.meeting-list{display:flex;flex-direction:column;gap:8px}
+.meeting-card{background:var(--bg);border:0.5px solid var(--border);border-radius:var(--radius-lg);padding:12px 14px;border-left:3px solid var(--blue)}
+.meeting-card.done{opacity:.5;border-left-color:var(--text3)}
+.meeting-top{display:flex;align-items:flex-start;gap:8px}
+.meeting-title{font-size:14px;font-weight:600;flex:1}
+.meeting-card.done .meeting-title{text-decoration:line-through;color:var(--text3)}
+.meeting-time{font-size:12px;color:var(--blue);font-weight:500;white-space:nowrap;background:var(--blue-bg);padding:3px 8px;border-radius:20px}
+.meeting-card.done .meeting-time{color:var(--text3);background:var(--bg2)}
+.meeting-meta{display:flex;gap:10px;margin-top:6px;flex-wrap:wrap}
+.meeting-meta span{font-size:12px;color:var(--text2);display:flex;align-items:center;gap:3px}
+.meeting-notes{font-size:12px;color:var(--text2);margin-top:6px;line-height:1.5;border-top:0.5px solid var(--border);padding-top:6px}
+.meeting-actions{display:flex;gap:6px;margin-top:8px}
+.meeting-btn{font-size:11px;padding:4px 10px;border:0.5px solid var(--border);border-radius:20px;color:var(--text2);background:var(--bg2);cursor:pointer}
+.meeting-btn.done-btn{border-color:var(--green);color:var(--green)}
+.meeting-btn.del-btn{border-color:var(--red);color:var(--red)}
+
+/* Toast */
 .toast{position:fixed;bottom:28px;left:50%;transform:translateX(-50%);background:var(--text);color:var(--bg);padding:9px 18px;border-radius:24px;font-size:13px;opacity:0;pointer-events:none;transition:opacity .2s;z-index:99;white-space:nowrap}
 .toast.show{opacity:1}
 </style>
 </head>
 <body>
 
-<!-- SETUP SCREEN -->
+<!-- SETUP -->
 <div id="setup-screen" style="display:none">
   <div style="font-size:48px;margin-bottom:16px">📋</div>
   <h1>My Planner</h1>
-  <p>Enter your Firebase config to enable<br/>real-time sync across all your devices.</p>
-
+  <p>Enter your Firebase config for real-time sync across all devices.</p>
   <div class="setup-steps">
-    <b>Get your free Firebase config (2 min):</b>
+    <b>Get your free Firebase config:</b>
     <ol>
       <li>Go to <a href="https://console.firebase.google.com" target="_blank">console.firebase.google.com</a></li>
-      <li>Click <b>Add project</b> → name it "my-planner" → Continue</li>
-      <li>Disable Google Analytics → <b>Create project</b></li>
-      <li>Click <b>&lt;/&gt; Web</b> icon → register app → copy the config</li>
-      <li>Go to <b>Firestore Database</b> → Create → Start in test mode</li>
-      <li>Paste the values below and tap Connect</li>
+      <li>Add project → name it "my-planner" → Create</li>
+      <li>Click &lt;/&gt; Web icon → register app → copy config</li>
+      <li>Firestore Database → Create → Standard → Start in test mode</li>
+      <li>Paste values below and tap Connect</li>
     </ol>
   </div>
-
-  <div class="setup-card" style="margin-top:16px">
+  <div class="setup-card">
     <h3>🔧 Firebase Config</h3>
-    <label>API Key</label>
-    <input id="cfg-apiKey" placeholder="AIzaSy..."/>
-    <label>Project ID</label>
-    <input id="cfg-projectId" placeholder="my-planner-xxxxx"/>
-    <label>App ID</label>
-    <input id="cfg-appId" placeholder="1:123456:web:abcdef"/>
-    <div class="setup-error" id="setup-error">Could not connect. Please check your config.</div>
+    <label>API Key</label><input id="cfg-apiKey" placeholder="AIzaSy..."/>
+    <label>Project ID</label><input id="cfg-projectId" placeholder="my-planner-xxxxx"/>
+    <label>App ID</label><input id="cfg-appId" placeholder="1:123456:web:abcdef"/>
+    <div class="setup-error" id="setup-error"></div>
     <button class="btn-primary" onclick="connectFirebase()">Connect & Start →</button>
   </div>
 </div>
@@ -164,7 +220,7 @@ body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;backgrou
 <div class="app" id="main-app" style="display:none">
 
   <div class="install-banner" id="install-banner">
-    <div style="font-size:22px;flex-shrink:0">📲</div>
+    <div style="font-size:20px;flex-shrink:0">📲</div>
     <div class="install-info">
       <strong>Install Planner App</strong>
       <p>Add to home screen — works offline too.</p>
@@ -178,177 +234,248 @@ body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;backgrou
   </div>
 
   <div class="topbar">
-    <div style="display:flex;align-items:center;gap:5px">
+    <div class="sync-row">
       <div class="sync-dot syncing" id="sync-dot"></div>
       <span class="sync-label" id="sync-label">Connecting…</span>
     </div>
-    <button class="logout-btn" onclick="resetConfig()">⚙ Change config</button>
+    <button class="cfg-btn" onclick="resetConfig()">⚙ Config</button>
   </div>
 
   <div class="tabs">
-    <button class="tab active" onclick="switchTab('day')" id="tab-day">
-      <svg viewBox="0 0 24 24"><rect x="3" y="4" width="18" height="18" rx="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/><circle cx="12" cy="15" r="1" fill="currentColor"/></svg>
-      Day
-    </button>
-    <button class="tab" onclick="switchTab('month')" id="tab-month">
-      <svg viewBox="0 0 24 24"><rect x="3" y="4" width="18" height="18" rx="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg>
-      Month
-    </button>
+    <button class="tab active" onclick="switchTab('day')" id="tab-day">📅 Day</button>
+    <button class="tab" onclick="switchTab('month')" id="tab-month">🗓 Month</button>
+    <button class="tab" onclick="switchTab('matrix')" id="tab-matrix">⊞ Matrix</button>
+    <button class="tab" onclick="switchTab('meetings')" id="tab-meetings">🤝 Meetings</button>
   </div>
 
+  <!-- DAY VIEW -->
   <div class="view active" id="view-day">
     <div class="header">
-      <button class="nav-btn" onclick="shiftDay(-1)"><svg viewBox="0 0 24 24"><polyline points="15 18 9 12 15 6"/></svg></button>
+      <button class="nav-btn" onclick="shiftDay(-1)">‹</button>
       <span class="date-title" id="day-title"></span>
-      <button class="nav-btn" onclick="shiftDay(1)"><svg viewBox="0 0 24 24"><polyline points="9 18 15 12 9 6"/></svg></button>
+      <button class="nav-btn" onclick="shiftDay(1)">›</button>
     </div>
     <div class="add-row">
       <input id="day-input" placeholder="Add a task…" onkeydown="if(event.key==='Enter')addTask()" autocomplete="off"/>
-      <button class="flag-btn" id="flag-btn" onclick="toggleFlag()">
-        <svg viewBox="0 0 24 24"><path d="M4 15s1-1 4-1 5 2 8 2 4-1 4-1V3s-1 1-4 1-5-2-8-2-4 1-4 1z"/><line x1="4" y1="22" x2="4" y2="15"/></svg>
-      </button>
+      <button class="flag-btn" id="flag-btn" onclick="toggleFlag()" title="Mark important">🚩</button>
       <button class="add-btn" onclick="addTask()">+</button>
     </div>
     <div class="section-label">Tasks</div>
     <div class="task-list" id="day-tasks"></div>
   </div>
 
+  <!-- MONTH VIEW -->
   <div class="view" id="view-month">
     <div class="header">
-      <button class="nav-btn" onclick="shiftMonth(-1)"><svg viewBox="0 0 24 24"><polyline points="15 18 9 12 15 6"/></svg></button>
+      <button class="nav-btn" onclick="shiftMonth(-1)">‹</button>
       <span class="date-title" id="month-title"></span>
-      <button class="nav-btn" onclick="shiftMonth(1)"><svg viewBox="0 0 24 24"><polyline points="9 18 15 12 9 6"/></svg></button>
+      <button class="nav-btn" onclick="shiftMonth(1)">›</button>
     </div>
     <div class="cal-grid" id="cal-grid"></div>
     <div id="month-tasks"></div>
   </div>
-</div>
 
+  <!-- EISENHOWER MATRIX -->
+  <div class="view" id="view-matrix">
+    <p class="matrix-intro">Organise tasks by <b>urgency</b> and <b>importance</b>. Tap ✓ to complete, × to delete.</p>
+    <div class="matrix-axis">
+      <div class="matrix-axis-label" style="color:var(--red)">⚡ Urgent</div>
+      <div class="matrix-axis-label" style="color:var(--text3)">🕐 Not Urgent</div>
+    </div>
+    <div class="matrix-grid">
+      <div class="matrix-cell q1">
+        <div class="matrix-cell-header">Do First</div>
+        <div class="matrix-cell-sub">Urgent + Important</div>
+        <div id="q1-tasks"></div>
+        <div class="matrix-add">
+          <input id="q1-input" placeholder="Add task…" onkeydown="if(event.key==='Enter')addMatrixTask('q1')"/>
+          <button onclick="addMatrixTask('q1')">+</button>
+        </div>
+      </div>
+      <div class="matrix-cell q2">
+        <div class="matrix-cell-header">Schedule</div>
+        <div class="matrix-cell-sub">Not Urgent + Important</div>
+        <div id="q2-tasks"></div>
+        <div class="matrix-add">
+          <input id="q2-input" placeholder="Add task…" onkeydown="if(event.key==='Enter')addMatrixTask('q2')"/>
+          <button onclick="addMatrixTask('q2')">+</button>
+        </div>
+      </div>
+      <div class="matrix-cell q3">
+        <div class="matrix-cell-header">Delegate</div>
+        <div class="matrix-cell-sub">Urgent + Not Important</div>
+        <div id="q3-tasks"></div>
+        <div class="matrix-add">
+          <input id="q3-input" placeholder="Add task…" onkeydown="if(event.key==='Enter')addMatrixTask('q3')"/>
+          <button onclick="addMatrixTask('q3')">+</button>
+        </div>
+      </div>
+      <div class="matrix-cell q4">
+        <div class="matrix-cell-header">Eliminate</div>
+        <div class="matrix-cell-sub">Not Urgent + Not Important</div>
+        <div id="q4-tasks"></div>
+        <div class="matrix-add">
+          <input id="q4-input" placeholder="Add task…" onkeydown="if(event.key==='Enter')addMatrixTask('q4')"/>
+          <button onclick="addMatrixTask('q4')">+</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- MEETINGS -->
+  <div class="view" id="view-meetings">
+    <div class="meeting-add-form">
+      <h3>➕ Schedule a Meeting</h3>
+      <div class="form-row">
+        <input id="m-title" placeholder="Meeting title" autocomplete="off"/>
+      </div>
+      <div class="form-row two">
+        <input id="m-date" type="date"/>
+        <input id="m-time" type="time"/>
+      </div>
+      <div class="form-row two">
+        <input id="m-duration" type="number" placeholder="Duration (mins)" min="5" step="5"/>
+        <input id="m-with" placeholder="With (person/team)"/>
+      </div>
+      <div class="form-row">
+        <select id="m-type">
+          <option value="">Meeting type…</option>
+          <option>1:1</option>
+          <option>Team standup</option>
+          <option>Client call</option>
+          <option>Review</option>
+          <option>Interview</option>
+          <option>Workshop</option>
+          <option>Other</option>
+        </select>
+      </div>
+      <div class="form-row">
+        <textarea id="m-notes" placeholder="Notes / agenda (optional)"></textarea>
+      </div>
+      <button class="btn-add-meeting" onclick="addMeeting()">Schedule Meeting</button>
+    </div>
+    <div class="section-label">Upcoming & Past Meetings</div>
+    <div class="meeting-list" id="meeting-list"></div>
+  </div>
+
+</div>
 <div class="toast" id="toast"></div>
 
-<!-- Firebase SDKs -->
 <script src="https://www.gstatic.com/firebasejs/10.12.0/firebase-app-compat.js"></script>
 <script src="https://www.gstatic.com/firebasejs/10.12.0/firebase-firestore-compat.js"></script>
-
 <script>
-// ── State ──────────────────────────────────────────────────────────
-let tasks={}, dayDate=new Date(), monthDate=new Date(), calSelected=null, impFlag=false;
-let db=null, unsubscribe=null, deferredPrompt=null;
+// ── State ──
+let tasks={}, matrix={q1:[],q2:[],q3:[],q4:[]}, meetings=[];
+let dayDate=new Date(), monthDate=new Date(), calSelected=null, impFlag=false;
+let db=null, unsubscribe=[], deferredPrompt=null;
 const isIOS=/iphone|ipad|ipod/i.test(navigator.userAgent);
 const isAndroid=/android/i.test(navigator.userAgent);
 const isStandalone=window.matchMedia('(display-mode:standalone)').matches||navigator.standalone;
 
-// ── Firebase setup ─────────────────────────────────────────────────
-function loadConfig(){
-  try{return JSON.parse(localStorage.getItem('fb-config'))}catch(e){return null}
-}
-function saveConfig(cfg){localStorage.setItem('fb-config',JSON.stringify(cfg))}
-function resetConfig(){
-  if(unsubscribe)unsubscribe();
-  localStorage.removeItem('fb-config');
-  location.reload();
-}
+// ── Firebase ──
+function loadConfig(){try{return JSON.parse(localStorage.getItem('fb-config'))}catch(e){return null}}
+function saveConfig(c){localStorage.setItem('fb-config',JSON.stringify(c))}
+function resetConfig(){unsubscribe.forEach(u=>u());localStorage.removeItem('fb-config');location.reload()}
 
 async function connectFirebase(){
   const apiKey=document.getElementById('cfg-apiKey').value.trim();
   const projectId=document.getElementById('cfg-projectId').value.trim();
   const appId=document.getElementById('cfg-appId').value.trim();
-  if(!apiKey||!projectId||!appId){
-    showSetupError('Please fill in all three fields.');return;
-  }
+  if(!apiKey||!projectId||!appId){showSetupError('Please fill all fields.');return;}
   const cfg={apiKey,projectId,appId,authDomain:`${projectId}.firebaseapp.com`,storageBucket:`${projectId}.appspot.com`,messagingSenderId:'',databaseURL:''};
-  saveConfig(cfg);
-  initFirebase(cfg);
+  saveConfig(cfg);initFirebase(cfg);
 }
+function showSetupError(msg){const e=document.getElementById('setup-error');e.textContent=msg;e.style.display='block'}
 
 function initFirebase(cfg){
   try{
-    if(!firebase.apps.length) firebase.initializeApp(cfg);
-    else firebase.app();
+    if(!firebase.apps.length)firebase.initializeApp(cfg);
     db=firebase.firestore();
     db.enablePersistence({synchronizeTabs:true}).catch(()=>{});
-    startSync();
-    showApp();
+    startSync();showApp();
   }catch(e){showSetupError('Connection failed: '+e.message)}
 }
 
-function showSetupError(msg){
-  const el=document.getElementById('setup-error');
-  el.textContent=msg;el.style.display='block';
-}
-
-// ── Firestore sync ─────────────────────────────────────────────────
 function startSync(){
   setSyncStatus('syncing','Syncing…');
-  unsubscribe=db.collection('tasks').onSnapshot(snap=>{
-    tasks={};
-    snap.forEach(doc=>{tasks[doc.id]=doc.data().list||[]});
+  // Tasks
+  unsubscribe.push(db.collection('tasks').onSnapshot(snap=>{
+    tasks={};snap.forEach(doc=>{tasks[doc.id]=doc.data().list||[]});
+    renderDay();renderCalGrid();if(calSelected)renderMonthTasks();
     setSyncStatus('on','Synced');
-    renderDay();
-    renderCalGrid();
-    if(calSelected)renderMonthTasks();
-    if(document.getElementById('view-month').classList.contains('active'))renderMonth();
-  },err=>{
-    setSyncStatus('off','Offline');
-  });
+  },()=>setSyncStatus('off','Offline')));
+  // Matrix
+  unsubscribe.push(db.collection('matrix').doc('data').onSnapshot(doc=>{
+    if(doc.exists){const d=doc.data();matrix={q1:d.q1||[],q2:d.q2||[],q3:d.q3||[],q4:d.q4||[]};}
+    renderMatrix();
+  }));
+  // Meetings
+  unsubscribe.push(db.collection('meetings').onSnapshot(snap=>{
+    meetings=[];snap.forEach(doc=>{meetings.push({id:doc.id,...doc.data()})});
+    meetings.sort((a,b)=>a.datetime.localeCompare(b.datetime));
+    renderMeetings();
+  }));
 }
 
-function setSyncStatus(state,label){
-  const dot=document.getElementById('sync-dot'),lbl=document.getElementById('sync-label');
-  dot.className='sync-dot'+(state==='on'?' ':state==='syncing'?' syncing':' off');
-  lbl.textContent=label;
+function setSyncStatus(s,l){
+  const d=document.getElementById('sync-dot'),lb=document.getElementById('sync-label');
+  d.className='sync-dot'+(s==='on'?' ':s==='syncing'?' syncing':' off');lb.textContent=l;
 }
 
 async function saveDay(k){
   if(!db)return;
-  setSyncStatus('syncing','Saving…');
-  try{
-    await db.collection('tasks').doc(k).set({list:tasks[k]||[]});
-    setSyncStatus('on','Synced');
-  }catch(e){setSyncStatus('off','Save failed')}
+  try{await db.collection('tasks').doc(k).set({list:tasks[k]||[]})}catch(e){}
+}
+async function saveMatrix(){
+  if(!db)return;
+  try{await db.collection('matrix').doc('data').set(matrix)}catch(e){}
 }
 
-// ── UI init ────────────────────────────────────────────────────────
+// ── App init ──
 function showApp(){
   document.getElementById('setup-screen').style.display='none';
   document.getElementById('main-app').style.display='block';
   if(isStandalone)document.getElementById('install-banner').classList.add('hidden');
+  // Set default date fields for meetings
+  const today=new Date().toISOString().slice(0,10);
+  document.getElementById('m-date').value=today;
   renderDay();
 }
 
 window.addEventListener('load',()=>{
   const cfg=loadConfig();
-  if(cfg){initFirebase(cfg)}
-  else{document.getElementById('setup-screen').style.display='flex'}
+  if(cfg)initFirebase(cfg);
+  else document.getElementById('setup-screen').style.display='flex';
 });
 
-// ── Install banner ─────────────────────────────────────────────────
-window.addEventListener('beforeinstallprompt',e=>{
-  e.preventDefault();deferredPrompt=e;
-  document.getElementById('btn-install').style.display='block';
-});
-window.addEventListener('appinstalled',()=>{
-  document.getElementById('install-banner').classList.add('hidden');
-});
-function installApp(){
-  if(!deferredPrompt)return;
-  deferredPrompt.prompt();
-  deferredPrompt.userChoice.then(r=>{
-    if(r.outcome==='accepted')document.getElementById('install-banner').classList.add('hidden');
-    deferredPrompt=null;
-  });
-}
+// ── Install ──
+window.addEventListener('beforeinstallprompt',e=>{e.preventDefault();deferredPrompt=e;document.getElementById('btn-install').style.display='block'});
+window.addEventListener('appinstalled',()=>document.getElementById('install-banner').classList.add('hidden'));
+function installApp(){if(!deferredPrompt)return;deferredPrompt.prompt();deferredPrompt.userChoice.then(r=>{if(r.outcome==='accepted')document.getElementById('install-banner').classList.add('hidden');deferredPrompt=null})}
 function showHowTo(){
   const s=document.getElementById('install-steps-txt');s.classList.add('show');
-  if(isIOS)s.innerHTML='<b>iPhone/iPad (Safari):</b><br>Tap Share (□↑) → <b>Add to Home Screen</b> → Add';
-  else if(isAndroid)s.innerHTML='<b>Android (Chrome):</b><br>Tap ⋮ menu → <b>Add to Home screen</b> or <b>Install app</b>';
+  if(isIOS)s.innerHTML='<b>iPhone (Safari):</b> Tap Share (□↑) → Add to Home Screen → Add';
+  else if(isAndroid)s.innerHTML='<b>Android (Chrome):</b> Tap ⋮ menu → Add to Home screen';
   else s.innerHTML='<b>Chrome/Edge:</b> Click ⊕ in address bar → Install<br><b>iPhone:</b> Safari → Share → Add to Home Screen<br><b>Android:</b> Chrome ⋮ → Add to Home screen';
 }
 function dismissBanner(){document.getElementById('install-banner').classList.add('hidden')}
 
-// ── App logic ──────────────────────────────────────────────────────
+// ── Tabs ──
+function switchTab(t){
+  document.querySelectorAll('.tab').forEach(b=>b.classList.remove('active'));
+  document.querySelectorAll('.view').forEach(v=>v.classList.remove('active'));
+  document.getElementById('tab-'+t).classList.add('active');
+  document.getElementById('view-'+t).classList.add('active');
+  if(t==='month')renderMonth();
+  if(t==='matrix')renderMatrix();
+  if(t==='meetings')renderMeetings();
+}
+
+// ── Helpers ──
 function key(d){return d.toISOString().slice(0,10)}
 function getTasks(k){return tasks[k]||(tasks[k]=[])}
+function esc(s){const d=document.createElement('div');d.appendChild(document.createTextNode(s));return d.innerHTML}
+function toast(msg){const t=document.getElementById('toast');t.textContent=msg;t.classList.add('show');setTimeout(()=>t.classList.remove('show'),2200)}
 function fmtDay(d){
   const today=new Date(),t=key(today),dk=key(d);
   const tom=new Date(today);tom.setDate(tom.getDate()+1);
@@ -358,70 +485,59 @@ function fmtDay(d){
   if(dk===key(yest))return'Yesterday — '+d.toLocaleDateString('en-IN',{weekday:'short',day:'numeric',month:'short'});
   return d.toLocaleDateString('en-IN',{weekday:'short',day:'numeric',month:'short',year:'numeric'});
 }
-function switchTab(t){
-  document.querySelectorAll('.tab').forEach(b=>b.classList.remove('active'));
-  document.querySelectorAll('.view').forEach(v=>v.classList.remove('active'));
-  document.getElementById('tab-'+t).classList.add('active');
-  document.getElementById('view-'+t).classList.add('active');
-  if(t==='month')renderMonth();
-}
-function toggleFlag(){impFlag=!impFlag;document.getElementById('flag-btn').classList.toggle('on',impFlag)}
+
+// ── Day view ──
+function toggleFlag(){impFlag=!impFlag;document.getElementById('flag-btn').style.opacity=impFlag?'1':'.6'}
 function addTask(){
   const inp=document.getElementById('day-input'),text=inp.value.trim();if(!text)return;
   getTasks(key(dayDate)).push({text,done:false,imp:impFlag,id:Date.now()});
-  inp.value='';impFlag=false;document.getElementById('flag-btn').classList.remove('on');
+  inp.value='';impFlag=false;document.getElementById('flag-btn').style.opacity='.6';
   renderDay();saveDay(key(dayDate));
 }
-function svgCheck(){return'<svg viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></svg>'}
-function svgFlag(){return'<svg viewBox="0 0 24 24"><path d="M4 15s1-1 4-1 5 2 8 2 4-1 4-1V3s-1 1-4 1-5-2-8-2-4 1-4 1z"/><line x1="4" y1="22" x2="4" y2="15"/></svg>'}
-function svgTrash(){return'<svg viewBox="0 0 24 24"><polyline points="3 6 5 6 21 6"/><path d="M19 6l-1 14a2 2 0 01-2 2H8a2 2 0 01-2-2L5 6"/><path d="M10 11v6M14 11v6"/><path d="M9 6V4a1 1 0 011-1h4a1 1 0 011 1v2"/></svg>'}
 function taskHTML(t,i,k){
   return`<div class="task${t.done?' done':''}${t.imp?' important':''}">
-    <div class="check${t.done?' checked':''}" onclick="toggleDone('${k}',${i})">${t.done?svgCheck():''}</div>
+    <div class="check${t.done?' checked':''}" onclick="toggleDone('${k}',${i})">${t.done?'✓':''}</div>
     <span class="task-text">${esc(t.text)}${t.pushed?'<span class="pushed-badge">pushed</span>':''}</span>
     <div class="task-actions">
-      <span class="flag-ind${t.imp?' on':''}" onclick="toggleImp('${k}',${i})">${svgFlag()}</span>
+      <span class="flag-ind${t.imp?' on':''}" onclick="toggleImp('${k}',${i})">🚩</span>
       <button class="push-btn" onclick="pushTask('${k}',${i})">→ tmrw</button>
-      <span class="del-btn" onclick="delTask('${k}',${i})">${svgTrash()}</span>
+      <span class="del-btn" onclick="delTask('${k}',${i})">✕</span>
     </div>
   </div>`;
 }
 function renderDay(){
   document.getElementById('day-title').textContent=fmtDay(dayDate);
   const k=key(dayDate),list=getTasks(k),el=document.getElementById('day-tasks');
-  if(!list.length){el.innerHTML='<div class="empty"><svg viewBox="0 0 24 24"><rect x="3" y="4" width="18" height="18" rx="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/><line x1="8" y1="14" x2="16" y2="14"/><line x1="8" y1="18" x2="12" y2="18"/></svg>No tasks for this day</div>';return;}
-  el.innerHTML=list.map((t,i)=>taskHTML(t,i,k)).join('');
+  el.innerHTML=list.length?list.map((t,i)=>taskHTML(t,i,k)).join(''):'<div class="empty">📋<br>No tasks for this day</div>';
 }
 function shiftDay(d){dayDate.setDate(dayDate.getDate()+d);renderDay()}
-function shiftMonth(d){monthDate.setMonth(monthDate.getMonth()+d);renderMonth()}
 function toggleDone(k,i){getTasks(k)[i].done=!getTasks(k)[i].done;if(k===key(dayDate))renderDay();if(calSelected===k)renderMonthTasks();renderCalGrid();saveDay(k)}
 function toggleImp(k,i){getTasks(k)[i].imp=!getTasks(k)[i].imp;if(k===key(dayDate))renderDay();if(calSelected===k)renderMonthTasks();renderCalGrid();saveDay(k)}
 function delTask(k,i){getTasks(k).splice(i,1);if(k===key(dayDate))renderDay();if(calSelected===k)renderMonthTasks();renderCalGrid();saveDay(k)}
 function pushTask(k,i){
   const t={...getTasks(k)[i],pushed:true,done:false};
-  const next=new Date(k);next.setDate(next.getDate()+1);
-  const nk=key(next);
+  const next=new Date(k);next.setDate(next.getDate()+1);const nk=key(next);
   getTasks(nk).push(t);getTasks(k).splice(i,1);
   toast('Pushed to '+next.toLocaleDateString('en-IN',{weekday:'short',day:'numeric',month:'short'}));
-  if(k===key(dayDate))renderDay();if(calSelected===k)renderMonthTasks();renderCalGrid();
-  saveDay(k);saveDay(nk);
+  if(k===key(dayDate))renderDay();if(calSelected===k)renderMonthTasks();renderCalGrid();saveDay(k);saveDay(nk);
 }
+
+// ── Month view ──
+function shiftMonth(d){monthDate.setMonth(monthDate.getMonth()+d);renderMonth()}
 function renderMonth(){
   document.getElementById('month-title').textContent=monthDate.toLocaleDateString('en-IN',{month:'long',year:'numeric'});
   renderCalGrid();
   if(calSelected)renderMonthTasks();
-  else document.getElementById('month-tasks').innerHTML='<div class="empty" style="padding:20px 0;font-size:13px">Tap a date to see tasks</div>';
+  else document.getElementById('month-tasks').innerHTML='<div class="empty" style="padding:16px 0;font-size:13px">Tap a date to see tasks</div>';
 }
 function renderCalGrid(){
-  const grid=document.getElementById('cal-grid');
-  if(!grid)return;
+  const grid=document.getElementById('cal-grid');if(!grid)return;
   grid.innerHTML='Su Mo Tu We Th Fr Sa'.split(' ').map(d=>`<div class="cal-lbl">${d}</div>`).join('');
-  const y=monthDate.getFullYear(),m=monthDate.getMonth();
-  const first=new Date(y,m,1).getDay(),days=new Date(y,m+1,0).getDate(),today=key(new Date());
+  const y=monthDate.getFullYear(),m=monthDate.getMonth(),first=new Date(y,m,1).getDay(),days=new Date(y,m+1,0).getDate(),today=key(new Date());
   for(let i=0;i<first;i++)grid.innerHTML+=`<div class="cal-cell faded"></div>`;
   for(let d=1;d<=days;d++){
-    const date=new Date(y,m,d),dk=key(date);
-    const list=getTasks(dk),hasImp=list.some(t=>t.imp&&!t.done),hasTasks=list.length>0;
+    const date=new Date(y,m,d),dk=key(date),list=getTasks(dk);
+    const hasImp=list.some(t=>t.imp&&!t.done),hasTasks=list.length>0;
     grid.innerHTML+=`<div class="cal-cell${dk===today?' today':''}${calSelected===dk?' selected':''}${hasImp?' has-imp':hasTasks?' has-tasks':''}" onclick="selectDate('${dk}')">${d}${hasTasks||hasImp?'<div class="dot"></div>':''}</div>`;
   }
 }
@@ -430,8 +546,8 @@ function renderMonthTasks(){
   const el=document.getElementById('month-tasks'),list=getTasks(calSelected);
   const d=new Date(calSelected),label=d.toLocaleDateString('en-IN',{weekday:'long',day:'numeric',month:'long'});
   let html=`<div class="month-day-header">${label}</div>`;
-  html+=list.length?`<div class="task-list">${list.map((t,i)=>taskHTML(t,i,calSelected)).join('')}</div>`:'<div style="font-size:13px;color:var(--text3);padding:10px 0">No tasks — add one below</div>';
-  html+=`<div class="month-add"><input id="month-inp" placeholder="Add task for this day…" onkeydown="if(event.key==='Enter')addMonthTask()" autocomplete="off"/><button class="add-btn" onclick="addMonthTask()">+</button></div>`;
+  html+=list.length?`<div class="task-list">${list.map((t,i)=>taskHTML(t,i,calSelected)).join('')}</div>`:'<div style="font-size:13px;color:var(--text3);padding:8px 0">No tasks</div>';
+  html+=`<div class="month-add"><input id="month-inp" placeholder="Add task…" onkeydown="if(event.key==='Enter')addMonthTask()" autocomplete="off"/><button class="add-btn" onclick="addMonthTask()">+</button></div>`;
   el.innerHTML=html;
 }
 function addMonthTask(){
@@ -439,12 +555,90 @@ function addMonthTask(){
   getTasks(calSelected).push({text,done:false,imp:false,id:Date.now()});
   inp.value='';renderMonthTasks();renderCalGrid();saveDay(calSelected);
 }
-function esc(s){const d=document.createElement('div');d.appendChild(document.createTextNode(s));return d.innerHTML}
-function toast(msg){const t=document.getElementById('toast');t.textContent=msg;t.classList.add('show');setTimeout(()=>t.classList.remove('show'),2200)}
 
-if('serviceWorker' in navigator){
-  navigator.serviceWorker.register('sw.js').catch(()=>{});
+// ── Eisenhower Matrix ──
+function addMatrixTask(q){
+  const inp=document.getElementById(q+'-input'),text=inp.value.trim();if(!text)return;
+  matrix[q].push({text,done:false,id:Date.now()});
+  inp.value='';renderMatrix();saveMatrix();
 }
+function toggleMatrixDone(q,i){matrix[q][i].done=!matrix[q][i].done;renderMatrix();saveMatrix()}
+function delMatrixTask(q,i){matrix[q].splice(i,1);renderMatrix();saveMatrix()}
+function renderMatrix(){
+  ['q1','q2','q3','q4'].forEach(q=>{
+    const el=document.getElementById(q+'-tasks');if(!el)return;
+    el.innerHTML=matrix[q].map((t,i)=>`
+      <div class="matrix-task${t.done?' done':''}" onclick="toggleMatrixDone('${q}',${i})">
+        <div class="matrix-task-check">${t.done?'✓':''}</div>
+        <span style="flex:1;font-size:12px">${esc(t.text)}</span>
+        <span class="matrix-task-del" onclick="event.stopPropagation();delMatrixTask('${q}',${i})">✕</span>
+      </div>`).join('');
+  });
+}
+
+// ── Meetings ──
+function addMeeting(){
+  const title=document.getElementById('m-title').value.trim();
+  const date=document.getElementById('m-date').value;
+  const time=document.getElementById('m-time').value;
+  if(!title||!date||!time){toast('Please add title, date and time');return;}
+  const meeting={
+    title,date,time,
+    datetime:date+'T'+time,
+    duration:document.getElementById('m-duration').value||'',
+    with:document.getElementById('m-with').value.trim(),
+    type:document.getElementById('m-type').value,
+    notes:document.getElementById('m-notes').value.trim(),
+    done:false,
+    created:Date.now()
+  };
+  db.collection('meetings').add(meeting).then(()=>{
+    document.getElementById('m-title').value='';
+    document.getElementById('m-time').value='';
+    document.getElementById('m-duration').value='';
+    document.getElementById('m-with').value='';
+    document.getElementById('m-type').value='';
+    document.getElementById('m-notes').value='';
+    toast('Meeting scheduled!');
+  });
+}
+function toggleMeetingDone(id){
+  const m=meetings.find(m=>m.id===id);if(!m)return;
+  db.collection('meetings').doc(id).update({done:!m.done});
+}
+function delMeeting(id){
+  if(confirm('Delete this meeting?'))db.collection('meetings').doc(id).delete();
+}
+function renderMeetings(){
+  const el=document.getElementById('meeting-list');if(!el)return;
+  if(!meetings.length){el.innerHTML='<div class="empty">🤝<br>No meetings yet</div>';return;}
+  const now=new Date().toISOString().slice(0,16);
+  el.innerHTML=meetings.map(m=>{
+    const isPast=m.datetime<now;
+    const timeStr=new Date(m.date+'T'+m.time).toLocaleTimeString('en-IN',{hour:'2-digit',minute:'2-digit',hour12:true});
+    const dateStr=new Date(m.date).toLocaleDateString('en-IN',{weekday:'short',day:'numeric',month:'short'});
+    return`<div class="meeting-card${m.done?' done':''}">
+      <div class="meeting-top">
+        <div class="meeting-title">${esc(m.title)}</div>
+        <div class="meeting-time">${timeStr}</div>
+      </div>
+      <div class="meeting-meta">
+        <span>📅 ${dateStr}</span>
+        ${m.duration?`<span>⏱ ${m.duration} mins</span>`:''}
+        ${m.with?`<span>👤 ${esc(m.with)}</span>`:''}
+        ${m.type?`<span>🏷 ${esc(m.type)}</span>`:''}
+        ${isPast&&!m.done?`<span style="color:var(--text3)">· Past</span>`:''}
+      </div>
+      ${m.notes?`<div class="meeting-notes">📝 ${esc(m.notes)}</div>`:''}
+      <div class="meeting-actions">
+        <button class="meeting-btn done-btn" onclick="toggleMeetingDone('${m.id}')">${m.done?'↩ Undo':'✓ Done'}</button>
+        <button class="meeting-btn del-btn" onclick="delMeeting('${m.id}')">✕ Delete</button>
+      </div>
+    </div>`;
+  }).join('');
+}
+
+if('serviceWorker' in navigator){navigator.serviceWorker.register('sw.js').catch(()=>{})}
 </script>
 </body>
 </html>
